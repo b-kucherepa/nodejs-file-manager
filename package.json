@@ -1,0 +1,25 @@
+{
+  "name": "nodejs-file-manager",
+  "version": "1.0.0",
+  "description": "A basic node.js CLI file manager",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/b-kucherepa/nodejs-file-manager"
+  },
+  "keywords": [
+    "nodejs",
+    "file manager",
+    "the-morning-firebird",
+    "b-kucherepa"
+  ],
+  "author": "b-kucherepa",
+  "license": "ISC"
+}
