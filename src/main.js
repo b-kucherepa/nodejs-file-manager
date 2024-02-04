@@ -1,9 +1,10 @@
 import path from 'path';
-import {EOL} from 'os';
+import { EOL } from 'os';
 
 import * as navigation from './modules/navigation.js';
 import * as filesystem from './modules/filesystem.js';
 import * as osinfo from './modules/osinfo.js';
+import * as cryptography from './modules/cryptography.js';
 
 const execCommand = async (command) => {
     const commandName = parseCommand(command)[0];
@@ -55,6 +56,10 @@ const execCommand = async (command) => {
         case 'os':
             const infoType = commandArgs[0];
             osinfo.printOsInfo(infoType);
+            break;
+        case 'hash':
+            const fileToHash = commandArgs[0];
+            cryptography.calcFileHash(fileToHash);
             break;
         default:
             console.log('Invalid command');
