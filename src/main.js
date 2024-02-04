@@ -1,41 +1,85 @@
+<<<<<<< HEAD
 import path from 'path';
-import { homedir } from 'os';
-import { fileURLToPath } from 'url';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const __homedir = homedir();
-var __workdir = process.cwd();
-
-const CONSOLE_FUNC = ['.exit'];
+import * as navigation from './modules/navigation.js';
+import * as filesystem from './modules/filesystem.js';
+=======
+import * as navigation from './modules/navigation.js';
+>>>>>>> 94eaddafe868281925e2de33964d9fead69e57ac
 
 const execCommand = async (command) => {
     const commandName = parseCommand(command)[0];
-    const commandArg = parseCommand(command).slice(1);
+    const commandArgs = parseCommand(command).slice(1);
 
-    const category = getCategory(commandName);
-    if (!category) {
-        console.log('< Invalid input');
-        return;
-    }
-
-    await import(`file://${__dirname}/modules/${category}/${commandName}.js?args=${commandArg}`);
+<<<<<<< HEAD
+    //try {
+        switch (commandName) {
+            case '.exit':
+                navigation.exit();
+                break;
+            case 'up':
+                navigation.goDirUp();
+                break;
+            case 'cd':
+                const newPath = buildPath(commandArgs[0]);
+                navigation.changeDir(newPath);
+                break;
+            case 'ls':
+                navigation.listDir();
+                break;
+            case 'cat':
+                const readPath = buildPath(commandArgs[0]);
+                filesystem.readFile(readPath);
+                break;
+            default:
+                console.log('Invalid command');
+                break;
+        }
+    //}
+    //catch {
+        console.log('Operation failed');
+    //}
 }
 
-const parseCommand = (command) => command.split(' ');
+const parseCommand = (command) => command.toString().replace("\r\n", '').split(' ');
 
-const getCategory = (commandName) => {
-    switch (true) {
-        case (checkIfInCategory(CONSOLE_FUNC, commandName)):
-            return 'console';
+export const buildPath = (inputPath) => {
+    const normalizedPath = path.normalize(inputPath);
+
+    if (path.isAbsolute(normalizedPath)) {
+        return normalizedPath;
+    }
+    else {
+        const absolutePath=path.join(process.cwd(), normalizedPath);
+        return absolutePath;
+    }
+}
+
+=======
+    switch (commandName) {
+        case '.exit':
+            navigation.exit();
+            break;
+        case 'up':
+            navigation.goDirUp();
+            break;
+        case 'cd':
+            navigation.changeDir(commandArgs[0]);
+            break;
+        case 'ls':
+            navigation.listDir();
+            break;
         default:
-            return null;
+            console.log('Invalid command');
+            break;
     }
 }
 
-const checkIfInCategory = (category, commandName) => category.some(() => commandName);
+const parseCommand = (command) => command.toString().replace("\r\n", '').split(' ');
 
+>>>>>>> 94eaddafe868281925e2de33964d9fead69e57ac
+process.stdin.on('data', (data) => execCommand(data));
 
-process.stdin.on('data', (data) => execCommand(data.toString()));
-
+navigation.setCwdToHomedir();
+navigation.printCwd();
 process.stdin.resume();
