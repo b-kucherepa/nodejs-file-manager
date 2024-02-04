@@ -1,7 +1,9 @@
 import path from 'path';
+import {EOL} from 'os';
 
 import * as navigation from './modules/navigation.js';
 import * as filesystem from './modules/filesystem.js';
+import * as osinfo from './modules/osinfo.js';
 
 const execCommand = async (command) => {
     const commandName = parseCommand(command)[0];
@@ -50,6 +52,10 @@ const execCommand = async (command) => {
             const deletePath = buildPath(commandArgs[0]);
             filesystem.deleteFile(deletePath);
             break;
+        case 'os':
+            const infoType = commandArgs[0];
+            osinfo.printOsInfo(infoType);
+            break;
         default:
             console.log('Invalid command');
             break;
@@ -60,7 +66,7 @@ const execCommand = async (command) => {
     //}
 }
 
-const parseCommand = (command) => command.toString().replace("\r\n", '').split(' ');
+const parseCommand = (command) => command.toString().replace(EOL, '').split(' ');
 
 export const buildPath = (inputPath) => {
     const normalizedPath = path.normalize(inputPath);
