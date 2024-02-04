@@ -1,5 +1,5 @@
-import { readFile } from 'fs/promises';
 import { createHash } from 'crypto';
+import { readFile } from 'fs/promises';
 
 export const calcFileHash = (filePath) => {
     const fileData = readFile(filePath);

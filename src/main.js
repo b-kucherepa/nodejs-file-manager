@@ -1,5 +1,5 @@
-import path from 'path';
 import { EOL } from 'os';
+import path from 'path';
 
 import * as navigation from './modules/navigation.js';
 import * as filesystem from './modules/filesystem.js';
@@ -72,7 +72,7 @@ const execCommand = async (command) => {
             compress.brotliDecompress(compressedFile, decompressPath);
             break;
         default:
-            console.log('Invalid command');
+            console.log('< Invalid command');
             break;
     }
 
@@ -96,7 +96,7 @@ export const buildPath = (inputPath) => {
 process.stdin.on('data', (data) => execCommand(data));
 
 process.on('uncaughtException', function (exception) {
-    console.log(`Operation failed, ${exception.message}`);
+    console.log(`< Operation failed, ${exception.message}`);
 });
 
 navigation.setCwdToHomedir();

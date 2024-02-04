@@ -1,6 +1,5 @@
-import { constants, rename, unlink, writeFile } from 'fs/promises';
-import { access } from 'fs';
 import { createReadStream, createWriteStream } from 'fs';
+import { constants, rename, unlink, writeFile } from 'fs/promises';
 import { pipeline } from 'stream/promises';
 
 export const readFile = async (filePath) => {
