@@ -1,4 +1,5 @@
-import { access, constants, copyFile as fscopyfile, rename, unlink, writeFile } from 'fs/promises';
+import { constants, rename, unlink, writeFile } from 'fs/promises';
+import { access } from 'fs';
 import { createReadStream, createWriteStream } from 'fs';
 import { pipeline } from 'stream/promises';
 
@@ -13,19 +14,15 @@ export const deleteFile = async (filePath) => await unlink(filePath);
 
 export const copyFile = async (sourcePath, destPath) => {
     const rs = createReadStream(sourcePath);
-    const ws = createWriteStream(destPath);
+    const ws = createWriteStream(destPath, { flag: 'wx' });
     await pipeline(rs, ws);
 }
 
 export const moveFile = async (sourcePath, destPath) => {
-    await copyFile (sourcePath, destPath);
-    await deleteFile (sourcePath);
+    await copyFile(sourcePath, destPath);
+    await deleteFile(sourcePath);
 }
 
 export const renameFile = async (sourcePath, destPath) => {
-    if (access(destPath, constants.F_OK)) {
-        console.log('Operation failed. A file with the same name exists in the destination folder');
-        return;
-    }
     await rename(sourcePath, destPath, constants.COPYFILE_EXCL);
 }
