@@ -16,8 +16,8 @@ const execCommand = async (command) => {
             navigation.goDirUp();
             break;
         case 'cd':
-            const newPath = buildPath(commandArgs[0]);
-            navigation.changeDir(newPath);
+            const newWdPath = buildPath(commandArgs[0]);
+            navigation.changeDir(newWdPath);
             break;
         case 'ls':
             navigation.listDir();
@@ -30,6 +30,21 @@ const execCommand = async (command) => {
             const createPath = buildPath(commandArgs[0]);
             const dataToWrite = commandArgs.slice(1).join(' ');
             filesystem.createFile(createPath, dataToWrite);
+            break;
+        case 'rn':
+            const initNamePath = buildPath(commandArgs[0]);
+            const newNamePath = buildPath(commandArgs[1]);
+            filesystem.renameFile(initNamePath, newNamePath);
+            break;
+        case 'cp':
+            const sourcePath = buildPath(commandArgs[0]);
+            const destPath = buildPath(commandArgs[1]);
+            filesystem.copyFile(sourcePath, destPath);
+            break;
+        case 'mv':
+            const initPath = buildPath(commandArgs[0]);
+            const newPath = buildPath(commandArgs[1]);
+            filesystem.moveFile(initPath, newPath);
             break;
         case 'rm':
             const deletePath = buildPath(commandArgs[0]);
