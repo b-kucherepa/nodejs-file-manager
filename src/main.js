@@ -5,6 +5,7 @@ import * as navigation from './modules/navigation.js';
 import * as filesystem from './modules/filesystem.js';
 import * as osinfo from './modules/osinfo.js';
 import * as cryptography from './modules/cryptography.js';
+import * as compress from './modules/compress.js';
 
 const execCommand = async (command) => {
     const commandName = parseCommand(command)[0];
@@ -60,6 +61,16 @@ const execCommand = async (command) => {
         case 'hash':
             const fileToHash = commandArgs[0];
             cryptography.calcFileHash(fileToHash);
+            break;
+        case 'compress':
+            const fileToCompress = buildPath(commandArgs[0]);
+            const compressPath = buildPath(commandArgs[1]);
+            compress.brotliCompress(fileToCompress, compressPath);
+            break;
+        case 'decompress':
+            const compressedFile = buildPath(commandArgs[0]);
+            const decompressPath = buildPath(commandArgs[1]);
+            compress.brotliDecompress(compressedFile, decompressPath);
             break;
         default:
             console.log('Invalid command');
