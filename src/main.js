@@ -58,7 +58,7 @@ const execCommand = async (command) => {
             osinfo.printOsInfo(infoType);
             break;
         case 'hash':
-            const fileToHash = commandArgs[0];
+            const fileToHash = buildPath(commandArgs.join(' '));
             cryptography.calcFileHash(fileToHash);
             break;
         case 'compress':
